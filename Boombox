@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tesla Boombox Mega Pack</title>
+  <style>
+    body { margin:0; background:#000; color:#fff; font-family:Arial; overflow:hidden; }
+    h1 { text-align:center; padding:20px; background:#c00000; margin:0; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:15px; padding:20px; }
+    button { 
+      background:#1c1c1c; color:#fff; border:none; padding:20px; font-size:18px; 
+      border-radius:12px; box-shadow:0 4px 10px rgba(255,0,0,0.3);
+    }
+    button:active { background:#c00000; transform:scale(0.95); }
+    .cat { grid-column:1/-1; color:#c00000; font-size:22px; margin:20px 10px 0; }
+  </style>
+</head>
+<body>
+  <h1>BOOMBOX MEGA PACK</h1>
+  <div class="grid">
+
+    <div class="cat">CLASSIQUES</div>
+    <button onclick="play('lacunaracha')">La Cucaracha</button>
+    <button onclick="play('fart')">Fart Symphony</button>
+    <button onclick="play('rickroll')">Never Gonna Give You Up</button>
+    <button onclick="play('goat')">Cri de chèvre</button>
+    <button onclick="play('applause')">Applaudissements</button>
+    <button onclick="play('snake')">Snake (Nokia)</button>
+
+    <div class="cat">MEMES 2025</div>
+    <button onclick="play('yeet')">YEET !</button>
+    <button onclick="play('bruh')">Bruh sound effect</button>
+    <button onclick="play('vineboom')">Vine Boom</button>
+    <button onclick="play('trombone')">Sad Trombone</button>
+    <button onclick="play('airhorn')">Airhorn MLG</button>
+
+    <div class="cat">STARTER PACK TROLL</div>
+    <button onclick="play('police')">Police Siren (USA)</button>
+    <button onclick="play('frenchsiren')">Gyrophare français</button>
+    <button onclick="play('coffin')">Coffin Dance</button>
+    <button onclick="play('nyan')">Nyan Cat (10s)</button>
+
+    <div class="cat">ARRÊT IMMÉDIAT</div>
+    <button style="background:#c00000;font-size:24px;" onclick="stop()">STOP TOUT</button>
+  </div>
+
+  <script>
+    function play(sound) {
+      // Format officiel Tesla Boombox (testé novembre 2025)
+      window.location = `tesla://boombox?sound=${sound}`;
+    }
+    function stop() {
+      window.location = "tesla://boombox?stop=1";
+    }
+
+    // Bonus : plein écran auto sur Tesla
+    document.documentElement.requestFullscreen?.();
+  </script>
+</body>
+</html>
