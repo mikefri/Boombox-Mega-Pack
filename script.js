@@ -294,3 +294,28 @@ async function fetchWeather(lat, lon) {
         // ... (bloc catch inchangé) ...
     }
 }
+
+// 5. GESTION DU THÈME (Dark/Light Mode)
+// MODIFIÉ : Ajout de la mise à jour du bouton de bascule
+function applyTheme(theme) {
+    const toggleButton = document.getElementById('theme-toggle');
+
+    if (theme === 'light') {
+        document.body.classList.add('light-theme');
+        localStorage.setItem('theme', 'light');
+        
+        // 🌟 NOUVEAU : Texte pour basculer vers le mode sombre
+        if (toggleButton) {
+            toggleButton.innerHTML = '⚫ Mode Sombre'; 
+        }
+
+    } else {
+        document.body.classList.remove('light-theme');
+        localStorage.setItem('theme', 'dark');
+
+        // 🌟 NOUVEAU : Texte pour basculer vers le mode clair
+        if (toggleButton) {
+            toggleButton.innerHTML = '⚪ Mode Clair'; 
+        }
+    }
+}
