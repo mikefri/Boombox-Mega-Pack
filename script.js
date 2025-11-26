@@ -1,10 +1,6 @@
 // ======================================================================
-// SCRIPT.JS - Tableau de Bord Tesla (Final, MÉTÉO, NEWS, THÈME)
+// SCRIPT.JS - Tableau de Bord Tesla (Complet et Corrigé)
 // ======================================================================
-
-// AUCUNE CLÉ API NÉCESSAIRE POUR LES ACTUALITÉS (Utilisation de Flux RSS public)
-// ======================================================================
-
 
 // ----------------------------------------------------------------------
 // Fonctions Utilitaires et Météo
@@ -89,28 +85,36 @@ async function fetchWeather(lat, lon) {
 
             const date = new Date(dateStr);
             const dayName = date.toLocaleDateString('fr-FR', { weekday: 'long' });
+            
+            // 🌟 AMÉLIORATION UX : Séparation de l'icône et du texte pour le style CSS
+            const fullDescription = getWeatherDescription(weatherCode);
+            // Extrait le premier caractère (l'emoji) si présent, sinon utilise la description complète
+            const icon = fullDescription.match(/(\p{Emoji}|\p{Emoji_Modifier})/u) ? fullDescription.match(/(\p{Emoji}|\p{Emoji_Modifier})/u)[0] : '';
+            const descriptionText = fullDescription.replace(icon, '').trim();
 
             const dayDiv = document.createElement('div');
             dayDiv.className = 'day-forecast';
             dayDiv.innerHTML = `
                 <h3>${dayName}</h3>
                 <p class="temp-range">${minTemp}°C / ${maxTemp}°C</p>
-                <p class="desc">${getWeatherDescription(weatherCode)}</p>
+                <p class="desc-icon">${icon}</p>
+                <p class="desc-text">${descriptionText}</p>
             `;
             forecastContainer.appendChild(dayDiv);
         }
 
         const now = new Date();
-        // NOTE: 'last-update-time' n'existe pas dans le HTML, cette ligne ne fait rien mais est conservée.
-        // document.getElementById('last-update-time').textContent = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+        // 🌟 CORRECTION: Activation de l'affichage de l'heure de mise à jour
+        document.getElementById('last-update-time').textContent = `Dernière maj : ${now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
 
     } catch (error) {
         console.error("Erreur lors du chargement de la météo :", error);
         
-        // 🚨 CORRECTION: Réinitialiser clairement les données en cas d'échec
+        // CORRECTION: Réinitialiser clairement les données en cas d'échec
         document.getElementById('temperature').textContent = "--°C"; 
         document.getElementById('description').textContent = "Erreur de chargement des données météo.";
         document.getElementById('forecast').innerHTML = '<p class="loading-message">Prévisions indisponibles.</p>';
+        document.getElementById('last-update-time').textContent = `Dernière maj : Erreur`;
     }
 }
 
@@ -179,7 +183,8 @@ function getLocation() {
     if (navigator.geolocation) {
         const options = {
             enableHighAccuracy: true,
-            timeout: 5000,
+            // 🚨 CORRECTION: Augmentation du timeout à 15s pour une meilleure fiabilité
+            timeout: 15000, 
             maximumAge: 0
         };
 
@@ -194,8 +199,9 @@ function getLocation() {
                 document.getElementById('location').textContent = errorMessage;
                 document.getElementById('temperature').textContent = "--°C";
                 document.getElementById('description').textContent = "Météo indisponible.";
-                // 🚨 CORRECTION: Réinitialiser aussi les prévisions en cas d'échec GPS
+                // Réinitialiser aussi les prévisions en cas d'échec GPS
                 document.getElementById('forecast').innerHTML = '<p class="loading-message">Prévisions indisponibles (Géolocalisation échouée).</p>'; 
+                document.getElementById('last-update-time').textContent = `Dernière maj : Échec GPS`;
             },
             options
         );
@@ -204,6 +210,7 @@ function getLocation() {
         document.getElementById('temperature').textContent = "--°C";
         document.getElementById('description').textContent = "Météo indisponible.";
         document.getElementById('forecast').innerHTML = '<p class="loading-message">Prévisions indisponibles (Géolocalisation non supportée).</p>';
+        document.getElementById('last-update-time').textContent = `Dernière maj : Échec GPS`;
     }
 }
 
@@ -213,12 +220,25 @@ function getLocation() {
 // ----------------------------------------------------------------------
 
 function applyTheme(theme) {
+    const toggleButton = document.getElementById('theme-toggle');
+
     if (theme === 'light') {
         document.body.classList.add('light-theme');
         localStorage.setItem('theme', 'light');
+        
+        // Texte du bouton de bascule
+        if (toggleButton) {
+            toggleButton.innerHTML = '⚫ Mode Sombre'; 
+        }
+
     } else {
         document.body.classList.remove('light-theme');
         localStorage.setItem('theme', 'dark');
+
+        // Texte du bouton de bascule
+        if (toggleButton) {
+            toggleButton.innerHTML = '⚪ Mode Clair'; 
+        }
     }
 }
 
@@ -245,7 +265,7 @@ function initializeDashboard() {
 document.addEventListener('DOMContentLoaded', () => {
     initializeDashboard();
 
-    // Gestion du bouton Rafraîchir
+    // Gestion du bouton Rafraîchir (Météo & Actus)
     const reloadButton = document.getElementById('reload-button');
     if (reloadButton) {
         reloadButton.addEventListener('click', (e) => {
@@ -255,43 +275,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Gestion des boutons de thème
-    const themeDarkButton = document.getElementById('theme-dark');
-    const themeLightButton = document.getElementById('theme-light');
-    
-    if (themeDarkButton) {
-        themeDarkButton.addEventListener('click', (e) => {
+    // 🌟 GESTION DU BOUTON DE THÈME UNIQUE (#theme-toggle) 🌟
+    const themeToggleButton = document.getElementById('theme-toggle');
+
+    if (themeToggleButton) {
+        themeToggleButton.addEventListener('click', (e) => {
             e.preventDefault();
-            applyTheme('dark');
+            
+            // Déterminer le thème actuel pour basculer vers l'opposé
+            const currentThemeIsLight = document.body.classList.contains('light-theme');
+            
+            if (currentThemeIsLight) {
+                applyTheme('dark'); // Bascule vers le sombre
+            } else {
+                applyTheme('light'); // Bascule vers le clair
+            }
         });
     }
 
-    if (themeLightButton) {
-        themeLightButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            applyTheme('light');
-        });
-    }
-    
     // Rafraîchissement automatique
     setInterval(getLocation, 600000); // Météo (toutes les 10 minutes)
     setInterval(fetchTeslaNews, 1800000); // Actualités (toutes les 30 minutes)
 });
-
-
-// Fonction de Récupération des Données Météo
-async function fetchWeather(lat, lon) {
-    // ... (début de la fonction) ...
-    try {
-        // ... (code de récupération des données et affichage des prévisions) ...
-
-        // Ligne à la fin du bloc 'try'
-        const now = new Date();
-        // 🌟 NOUVEAU/MODIFIÉ : Afficher l'heure de la mise à jour 🌟
-        document.getElementById('last-update-time').textContent = `Dernière maj : ${now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
-
-    } catch (error) {
-        // ... (bloc catch inchangé) ...
-    }
-}
-
