@@ -145,3 +145,19 @@ function getLocation() {
 // Lancement
 getLocation(); 
 setInterval(getLocation, 600000); // Rafraîchissement toutes les 10 minutes
+
+// ======================================================================
+// 4. INTERACTION BOUTONS
+// ======================================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    const reloadButton = document.getElementById('reload-button');
+    if (reloadButton) {
+        reloadButton.addEventListener('click', (e) => {
+            e.preventDefault(); // Empêche le lien de naviguer
+            console.log("Rafraîchissement manuel de la position et de la météo.");
+            // On appelle la fonction de localisation (qui appelle la météo)
+            getLocation(); 
+        });
+    }
+});
