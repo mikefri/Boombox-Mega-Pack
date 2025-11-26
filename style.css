@@ -51,6 +51,7 @@ body {
 #main-content {
     padding: 30px; 
     overflow-y: auto; 
+    position: relative; /* BASE POUR POSITIONNEMENT STICKY */
 }
 
 #weather-container {
@@ -59,6 +60,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 30px;
+    /* S'assurer qu'il y a assez d'espace pour que le footer sticky fonctionne */
+    padding-bottom: 70px; 
 }
 
 /* --- Panneau Latéral (Sidebar) --- */
@@ -68,7 +71,7 @@ body {
     border-right: 1px solid #333;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between; /* Ancre le footer au bas */
 }
 
 #sidebar h2 {
@@ -107,19 +110,20 @@ body {
     transform: translateY(-2px);
 }
 
+/* --- Footer sidebar ANCRÉ --- */
 .sidebar-footer {
     text-align: center;
     font-size: 0.9em;
     color: #666;
+    margin-top: 15px; 
 }
 
 /* ----------------------------------------------------------------------
-   NOUVEAU : GRILLE INFOS ACTUELLES (Température + News)
+   NOUVEAU : GRILLE INFOS ACTUELLES
    ---------------------------------------------------------------------- */
 
 #current-info-grid {
     display: grid;
-    /* 1ère colonne (Météo) peut être plus large que la 2ème (News) pour la temp. */
     grid-template-columns: 1.2fr 1fr; 
     gap: 30px; 
     align-items: stretch;
@@ -142,7 +146,7 @@ body {
 
 #current-weather-card {
     text-align: center;
-    padding: 40px 20px; /* Redonne le padding initial */
+    padding: 40px 20px;
 }
 
 #location {
@@ -174,7 +178,7 @@ body {
 
 #tesla-news-widget {
     text-align: left;
-    padding: 30px; /* Ajout d'un padding pour aligner avec le reste */
+    padding: 30px; 
 }
 
 #tesla-news-widget h3 {
@@ -215,6 +219,7 @@ body {
     font-size: 0.8em;
     opacity: 0.6;
 }
+
 
 /* ----------------------------------------------------------------------
    Styles PRÉVISIONS (sous la grille)
@@ -264,11 +269,18 @@ body {
 
 
 /* ----------------------------------------------------------------------
-   Pied de page
+   Pied de page de la MÉTÉO (ANCRÉ en bas)
    ---------------------------------------------------------------------- */
 
 .last-updated {
     font-size: 1.2em;
-    opacity: 0.6;
+    opacity: 0.8;
     margin-top: 40px;
+    
+    position: sticky; /* Reste visible lors du défilement */
+    bottom: 0;
+    padding: 10px 0;
+    background-color: var(--bg-color); 
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.5); 
+    z-index: 10;
 }
