@@ -34,27 +34,30 @@
         <div id="main-content">
             <div id="weather-container">
                 
-                <div id="current-weather-card">
-                    <p id="location">Recherche de la position...</p>
-                    <div id="current-weather">
-                        <p id="temperature">--°C</p>
-                        <p id="description">Chargement des données.</p>
+                <div id="current-info-grid">
+                    
+                    <div id="current-weather-card" class="info-card">
+                        <p id="location">Recherche de la position...</p>
+                        <div id="current-weather">
+                            <p id="temperature">--°C</p>
+                            <p id="description">Chargement des données.</p>
+                        </div>
                     </div>
+
+                    <div id="tesla-news-widget" class="info-card">
+                        <h3>📰 Actualités Tesla</h3>
+                        <div id="tesla-news" class="news-list-mini">
+                            <p class="loading-message">Chargement des actualités...</p>
+                        </div>
+                    </div>
+
                 </div>
-    
                 <div id="forecast-section">
                     <h2>Prévisions sur 3 Jours</h2>
                     <div id="forecast" class="forecast-grid">
                     </div>
                 </div>
                 
-                <div id="tesla-news-section">
-                    <h2>📰 Actualités Tesla Récentes</h2>
-                    <div id="tesla-news" class="news-list">
-                        <p class="loading-message">Chargement des actualités...</p>
-                    </div>
-                </div>
-    
                 <p class="last-updated">Dernière mise à jour : <span id="last-update-time">--:--</span></p>
             </div>
         </div>
