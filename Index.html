@@ -3,26 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Météo Tesla - Position GPS</title>
+    <title>Tableau de Bord Tesla</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="weather-container">
-        <h1>☀️ Météo Actuelle</h1>
-        <p id="location">Recherche de la position GPS...</p>
+    <div id="app-container">
+        
+        <div id="sidebar">
+            <h2>🚀 Navigation Rapide</h2>
+            <nav>
+                <a href="https://www.google.com/maps" class="nav-button" target="_blank">🗺️ Google Maps</a>
+                <a href="https://www.waze.com" class="nav-button" target="_blank">🚗 Waze</a>
+                <a href="https://www.spotify.com" class="nav-button" target="_blank">🎶 Spotify</a>
+                <a href="https://www.youtube.com/feed/subscriptions" class="nav-button" target="_blank">📺 YouTube</a>
+                <a href="#" id="reload-button" class="nav-button">🔄 Rafraîchir Météo</a>
+            </nav>
+            <div class="sidebar-footer">
+                <p>Tesla Dash v1.0</p>
+            </div>
+        </div>
 
-        <div id="current-weather">
-            <p id="temperature">--°C</p>
-            <p id="description">Veuillez autoriser le partage de position.</p>
+        <div id="main-content">
+            <div id="weather-container">
+                
+                <div id="current-weather-card">
+                    <p id="location">Recherche de la position...</p>
+                    <div id="current-weather">
+                        <p id="temperature">--°C</p>
+                        <p id="description">Chargement des données.</p>
+                    </div>
+                </div>
+    
+                <div id="forecast-section">
+                    <h2>Prévisions sur 3 Jours</h2>
+                    <div id="forecast" class="forecast-grid">
+                        </div>
+                </div>
+    
+                <p class="last-updated">Dernière mise à jour : <span id="last-update-time">--:--</span></p>
+            </div>
         </div>
         
-        <hr> <div id="forecast-section">
-            <h2>Prévisions sur 3 Jours</h2>
-            <div id="forecast" class="forecast-grid">
-                </div>
-        </div>
-
-        <p class="last-updated">Dernière mise à jour : <span id="last-update-time">--:--</span></p>
     </div>
     <script src="script.js"></script>
 </body>
