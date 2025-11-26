@@ -291,6 +291,6 @@ body {
 
 /* Assurez-vous que le conteneur parent (info-card) est positionné pour que 'absolute' fonctionne */
 .info-card {
-    padding: 15px 20px; /* Réduire le padding vertical (15px) */
+    position: relative; /* Ceci est crucial pour la position absolue de l'heure */
     /* ... autres styles ... */
 }
