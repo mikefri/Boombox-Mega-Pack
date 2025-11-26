@@ -279,7 +279,7 @@ body {
 .update-time-text {
     /* Position en bas à droite de la carte (si la carte est relative) */
     position: absolute;
-    bottom: 60px;
+    bottom: 15px;
     right: 15px;
     
     /* Style pour la discrétion */
