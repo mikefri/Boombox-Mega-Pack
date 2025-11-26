@@ -114,7 +114,7 @@ async function fetchWeather(lat, lon) {
         document.getElementById('temperature').textContent = "--°C"; 
         document.getElementById('description').textContent = "Erreur de chargement des données météo.";
         document.getElementById('forecast').innerHTML = '<p class="loading-message">Prévisions indisponibles.</p>';
-        document.getElementById('last-update-time').textContent = `Dernière maj : Erreur`;
+        
     }
 }
 
