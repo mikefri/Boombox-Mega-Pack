@@ -1,35 +1,33 @@
-// script.js
-const API_KEY = 'VOTRE_CLE_API_ICI'; // <-- REMPLACEZ PAR VOTRE VRAIE CLÉ
-const CITY_NAME = 'Paris'; // <-- Changez pour votre ville par défaut
+const LATITUDE = 47.0811; // Exemple : Coordonnées de Nevers, France
+const LONGITUDE = 3.1610; 
 
-async function fetchWeather() {
-    // 1. Appel API
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${CITY_NAME}&units=metric&lang=fr&appid=${API_KEY}`;
+async function fetchWeatherOpenMeteo() {
+    // API pour la météo actuelle et les prévisions quotidiennes (jusqu'à 7 jours)
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${LATITUDE}&longitude=${LONGITUDE}&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=3`;
 
     try {
         const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Erreur de l\'API météo');
-        }
         const data = await response.json();
 
-        // 2. Mise à jour du HTML
-        document.getElementById('location').textContent = data.name;
-        document.getElementById('temperature').textContent = `${Math.round(data.main.temp)}°C`;
-        // La première lettre en majuscule pour la description
-        const description = data.weather[0].description;
-        document.getElementById('description').textContent = description.charAt(0).toUpperCase() + description.slice(1);
+        // Récupération des données actuelles
+        const currentTemp = data.current.temperature_2m;
+        // Le code météo doit être mappé (traduit) en description/emoji
+        const weatherCode = data.current.weather_code; 
         
-        // 3. Mise à jour de l'heure
+        document.getElementById('location').textContent = `Météo pour (${LATITUDE}, ${LONGITUDE})`;
+        document.getElementById('temperature').textContent = `${Math.round(currentTemp)}°C`;
+        // Il vous faudrait une fonction pour traduire 'weather_code' en texte (ex: 3 -> nuageux)
+
+        // TODO: Mettre à jour les prévisions journalières (data.daily) dans le div #forecast
+
         const now = new Date();
         document.getElementById('last-update-time').textContent = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
 
     } catch (error) {
-        console.error("Erreur lors du chargement de la météo :", error);
-        document.getElementById('description').textContent = "Erreur de chargement. Vérifiez la clé API.";
+        console.error("Erreur lors du chargement de la météo Open-Meteo :", error);
+        document.getElementById('description').textContent = "Erreur de chargement de l'API.";
     }
 }
 
-// Lancer le chargement au démarrage et le rafraîchir toutes les 10 minutes
-fetchWeather();
-setInterval(fetchWeather, 600000); // 600000 ms = 10 minutes
+fetchWeatherOpenMeteo();
+// ... (gardez l'intervalle de rafraîchissement)
