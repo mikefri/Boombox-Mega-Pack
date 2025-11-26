@@ -1,5 +1,5 @@
 /* ======================================================================
-    style.css - Design Moderne et Bi-colonne (FINAL)
+    style.css - Design Moderne et Bi-colonne (FINAL & OPTIMISÉ)
     ====================================================================== */
 
 :root {
@@ -11,6 +11,7 @@
     --card-bg: #1E1E1E; 
     --sidebar-bg: #0A0A0A; 
     --border-radius: 12px;
+    --secondary-text-color: #999999; /* Ajout d'une couleur secondaire pour les textes discrets */
 }
 
 /* ----------------------------------------------------------------------
@@ -23,6 +24,7 @@ body.light-theme {
     --temp-color: #008000; 
     --card-bg: #FFFFFF; 
     --sidebar-bg: #EAEAEA; 
+    --secondary-text-color: #666666; 
 }
 
 
@@ -119,7 +121,6 @@ body {
 
 #current-info-grid {
     display: grid;
-    /* Conserver l'équilibre des colonnes */
     grid-template-columns: 1.2fr 1fr; 
     gap: 20px; /* Réduit légèrement l'espace entre les cartes */
     align-items: stretch;
@@ -128,8 +129,9 @@ body {
 .info-card {
     background: var(--card-bg);
     border-radius: var(--border-radius);
-    /* 🚨 MODIFIÉ : Réduction du padding vertical pour diminuer la hauteur */
+    /* 🚨 OPTIMISÉ : Réduction du padding pour diminuer la hauteur */
     padding: 20px; 
+    position: relative; /* Crucial pour la position absolue de l'heure */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
@@ -142,7 +144,7 @@ body {
 
 #current-weather-card {
     text-align: center;
-    /* 🚨 MODIFIÉ : Réduction du padding vertical pour la carte météo */
+    /* 🚨 OPTIMISÉ : Réduction du padding vertical de la carte météo */
     padding: 25px 20px; 
 }
 
@@ -154,8 +156,8 @@ body {
 }
 
 #temperature {
-    /* 🚨 MODIFIÉ : Réduction majeure de la taille de police de la température */
-    font-size: 6em; /* Était 10em */
+    /* 🚨 OPTIMISÉ : Réduction majeure de la taille de police de la température */
+    font-size: 6em; 
     font-weight: 500;
     line-height: 1;
     color: var(--temp-color);
@@ -163,24 +165,27 @@ body {
 }
 
 #description {
-    font-size: 1.6em; /* Réduit la taille de la description */
-    margin-top: 5px;
+    /* 🚨 AMÉLIORATION UX : Augmentation de la taille pour l'icône/emoji */
+    font-size: 2.5em; /* Ancien: 1.6em */
+    margin-top: 10px; 
     margin-bottom: 0;
     opacity: 0.9;
 }
 
 /* ----------------------------------------------------------------------
-    Style pour l'heure de mise à jour (pour l'amélioration précédente)
+    Style pour l'heure de mise à jour (texte discret)
     ---------------------------------------------------------------------- */
 .update-time-text {
     position: absolute;
-    bottom: 20px; /* Ajustez cette valeur si la carte est trop basse/haute */
+    /* 🚨 AJUSTÉ : Position pour ne pas gêner les grands éléments */
+    bottom: 60px; /* Exemple de position plus haute */
     right: 15px;
     font-size: 0.8rem;
-    color: var(--secondary-text-color, #aaa); 
+    color: var(--secondary-text-color); 
     opacity: 0.7;
     margin: 0;
 }
+
 
 /* ----------------------------------------------------------------------
     Styles WIDGET ACTUALITÉS TESLA (Colonne 2)
@@ -188,15 +193,15 @@ body {
 
 #tesla-news-widget {
     text-align: left;
-    /* 🚨 MODIFIÉ : Réduction du padding pour aligner et diminuer la hauteur */
+    /* 🚨 OPTIMISÉ : Réduction du padding */
     padding: 25px; 
 }
 
 #tesla-news-widget h3 {
-    font-size: 1.5em; /* Réduit le titre du widget */
+    font-size: 1.5em; 
     color: var(--accent-color);
     margin-top: 0;
-    margin-bottom: 10px; /* Réduit la marge */
+    margin-bottom: 10px; 
     border-bottom: 1px solid #333;
     padding-bottom: 5px;
 }
@@ -220,15 +225,15 @@ body {
 }
 
 .news-list-mini .news-item h3 {
-    /* 🚨 MODIFIÉ : Réduction du titre de l'article */
+    /* 🚨 OPTIMISÉ : Réduction du titre de l'article */
     font-size: 1em; 
     margin: 0;
     color: var(--text-color);
-    line-height: 1.2; /* Resserre les lignes */
+    line-height: 1.2; 
 }
 
 .news-list-mini .news-source {
-    font-size: 0.75em; /* Rend la source/heure très petite */
+    font-size: 0.75em; 
     opacity: 0.6;
 }
 
@@ -237,7 +242,7 @@ body {
     ---------------------------------------------------------------------- */
 
 #forecast-section h2 {
-    font-size: 2em; /* Réduit le titre de la section */
+    font-size: 2em; 
     color: var(--text-color);
     border-bottom: 2px solid var(--accent-color);
     padding-bottom: 10px;
@@ -247,7 +252,7 @@ body {
 .forecast-grid {
     display: flex;
     justify-content: space-around;
-    gap: 20px; /* Réduit l'espace */
+    gap: 20px; 
 }
 
 .day-forecast {
@@ -260,22 +265,41 @@ body {
 }
 
 .day-forecast h3 {
-    font-size: 1.5em; /* Réduit la taille des jours */
+    font-size: 1.5em; 
     margin: 0 0 5px 0;
     font-weight: 500;
     color: var(--accent-color);
+    text-align: center;
 }
 
+/* 🚨 AMÉLIORATION UX : Styles pour les icônes séparées des prévisions */
+.day-forecast .desc-icon {
+    font-size: 3em; /* Rendre l'emoji très grand */
+    display: block;
+    text-align: center;
+    margin: 5px 0 10px 0;
+    line-height: 1;
+}
+
+.day-forecast .desc-text {
+    font-size: 1.1em; /* Texte plus petit que l'icône */
+    opacity: 0.7;
+    text-align: center;
+    margin-bottom: 10px;
+}
+/* Style de secours pour les anciens éléments 'desc' si le JS n'est pas mis à jour */
+.day-forecast .desc {
+    font-size: 1.5em;
+    opacity: 0.7;
+}
+
+
 .day-forecast .temp-range {
-    font-size: 1.3em; /* Réduit la taille de la plage de température */
+    font-size: 1.3em; 
     font-weight: bold;
     color: var(--text-color);
     margin: 5px 0;
-}
-
-.day-forecast .desc {
-    font-size: 1.2em; /* Réduit la taille de la description */
-    opacity: 0.7;
+    text-align: center;
 }
 
 
