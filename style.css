@@ -272,3 +272,25 @@ body {
     opacity: 0.6;
     margin-top: 40px;
 }
+
+
+
+/* SUGGESTION CSS pour un affichage discret */
+.update-time-text {
+    /* Position en bas à droite de la carte (si la carte est relative) */
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    
+    /* Style pour la discrétion */
+    font-size: 0.8rem;
+    color: var(--secondary-text-color, #aaa); /* Utilisez une couleur plus claire/grise */
+    opacity: 0.7; /* Légèrement transparent */
+    margin: 0;
+}
+
+/* Assurez-vous que le conteneur parent (info-card) est positionné pour que 'absolute' fonctionne */
+.info-card {
+    position: relative; /* Ceci est crucial pour la position absolue de l'heure */
+    /* ... autres styles ... */
+}
