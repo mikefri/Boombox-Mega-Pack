@@ -277,3 +277,20 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(getLocation, 600000); // Météo (toutes les 10 minutes)
     setInterval(fetchTeslaNews, 1800000); // Actualités (toutes les 30 minutes)
 });
+
+
+// Fonction de Récupération des Données Météo
+async function fetchWeather(lat, lon) {
+    // ... (début de la fonction) ...
+    try {
+        // ... (code de récupération des données et affichage des prévisions) ...
+
+        // Ligne à la fin du bloc 'try'
+        const now = new Date();
+        // 🌟 NOUVEAU/MODIFIÉ : Afficher l'heure de la mise à jour 🌟
+        document.getElementById('last-update-time').textContent = `Dernière maj : ${now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+
+    } catch (error) {
+        // ... (bloc catch inchangé) ...
+    }
+}
